@@ -36,6 +36,22 @@ name=Spock&pageSize=10&pageNumber=0
 
 Work through these in order — earlier items are higher priority.
 
+## App State & Data Flow
+
+On initial load, the app fetches all or fixed numbers of characters (empty name param) and displays
+them in the grid. This is the default state — no search needed to see content.
+
+Search and filters are always combined into a single API call. There is no
+separate filter request. Every change to the search term or any filter resets
+the page to 0 and fires a new fetch with all active params included.
+
+Example — user has typed "Kirk" and toggled gender to M:
+
+POST /character/search
+name=Kirk&gender=M&pageNumber=0&pageSize=10
+
+Clearing the search term does not clear the filters, and vice versa.
+
 ### 1. Search Bar
 - Debounced input with a 300ms delay.
 - Calls /character/search as the user types.
@@ -51,8 +67,10 @@ Work through these in order — earlier items are higher priority.
 - Gender: M / F / Unknown.
 - Deceased: boolean toggle.
 - Mirror Universe: boolean toggle.
-- Filters should trigger a new API fetch, not pure client-side filtering.
-- Note: STAPI only accepts M and F as API values. Unknown means gender is null — handle it client-side.
+- Filters are always combined with the current search term in one API call.
+- Changing any filter resets pagination to page 0.
+- Note: STAPI only accepts M and F as gender API values.
+  Unknown (null gender) must be fetched without a gender param and filtered client-side.
 
 ### 4. Pagination
 - "Load more" button or page controls.
@@ -77,17 +95,6 @@ Work through these in order — earlier items are higher priority.
 ### 8. URL Sync (stretch)
 - Search term and active filters reflected in URL query params.
 - Refreshing or sharing the URL restores the same state.
-
----
-
-## What We're Looking For
-
-Area               | What to observe
-Prioritization     | Do they tackle the most important features first?
-AI prompting       | Do they break the task into focused prompts?
-Debugging          | Do they inspect API responses and catch nested-data issues?
-State architecture | Is shared state handled cleanly across drawer, favorites, comparison?
-Code review        | Do they validate AI-generated code before using it?
 
 ---
 
