@@ -20,6 +20,7 @@ STAPI requires no API key.
 Search endpoints use POST with application/x-www-form-urlencoded.
 
 Endpoint              | Method | Key Params
+----------------------|--------|--------------------------------------------------
 /character/search     | POST   | name, gender, deceased, pageNumber, pageSize
 /character/{uid}      | GET    | uid
 /species/search       | POST   | name, pageNumber
