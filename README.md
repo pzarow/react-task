@@ -43,7 +43,7 @@ On initial load, the app fetches all or fixed numbers of characters (empty name 
 them in the grid. This is the default state — no search needed to see content.
 
 Search and filters are always combined into a single API call. There is no
-separate filter request. Every change to the search term or any filter resets
+separate filter request. Every change to the search term or any filter (via accept filters button) resets
 the page to 0 and fires a new fetch with all active params included.
 
 Example — user has typed "Kirk" and toggled gender to M:
